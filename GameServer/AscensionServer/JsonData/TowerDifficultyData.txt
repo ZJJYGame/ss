@@ -1,9 +1,44 @@
 [
-{"DifficultyId":0,"Name":"玩赏","IconPath":"CountTimeImg_1","FloorIdArray":[0,1,2,3,4,5]},
-{"DifficultyId":1,"Name":"先锋","IconPath":"CountTimeImg_2","FloorIdArray":[6,7,8,9,10]},
-{"DifficultyId":2,"Name":"三等","IconPath":"CountTimeImg_3","FloorIdArray":[11,12,13,14,15]},
-{"DifficultyId":3,"Name":"中将","IconPath":"CountTimeImg_4","FloorIdArray":[16,17,18,19,20]},
-{"DifficultyId":4,"Name":"上将","IconPath":"CountTimeImg_5","FloorIdArray":[21,22,23,24,25]},
-{"DifficultyId":5,"Name":"元帅","IconPath":"CountTimeImg_6","FloorIdArray":[26,27,28,29,30]},
-{"DifficultyId":6,"Name":"虫王","IconPath":"CountTimeImg_7","FloorIdArray":[31,32,33,34,35]}	
+	{
+		"DifficultyId":0,
+		"Name":"玩赏",
+		"IconPath":"null",
+		"FloorIdArray":[0,1,2,3,4]
+	},
+	{
+		"DifficultyId":1,
+		"Name":"先锋",
+		"IconPath":"null",
+		"FloorIdArray":[5,6,7,8,9]
+	},
+	{
+		"DifficultyId":2,
+		"Name":"三等",
+		"IconPath":"null",
+		"FloorIdArray":[10,11,12,13,14]
+	},
+	{
+		"DifficultyId":3,
+		"Name":"中将",
+		"IconPath":"null",
+		"FloorIdArray":[15,16,17,18,19]
+	},
+	{
+		"DifficultyId":4,
+		"Name":"上将",
+		"IconPath":"null",
+		"FloorIdArray":[20,21,22,23,24]
+	},
+	{
+		"DifficultyId":5,
+		"Name":"元帅",
+		"IconPath":"null",
+		"FloorIdArray":[25,26,27,28,29]
+	},
+	{
+		"DifficultyId":6,
+		"Name":"虫王",
+		"IconPath":"null",
+		"FloorIdArray":[30,31,32,33,34]
+	}
 ]

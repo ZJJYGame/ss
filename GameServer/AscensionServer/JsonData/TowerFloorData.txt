@@ -1,38 +1,212 @@
 [
-{"FloorId":0,"CricketId":10001,"RewardIdArray":[0,1,2],"RewardCountArray":[1,5,10]},
-{"FloorId":1,"CricketId":10002,"RewardIdArray":[0,1,2],"RewardCountArray":[1,5,10]},
-{"FloorId":2,"CricketId":10003,"RewardIdArray":[0,1,2],"RewardCountArray":[1,5,10]},
-{"FloorId":3,"CricketId":10004,"RewardIdArray":[0,1,2],"RewardCountArray":[1,5,10]},
-{"FloorId":4,"CricketId":10005,"RewardIdArray":[0,1,2],"RewardCountArray":[1,5,10]},
-{"FloorId":5,"CricketId":10006,"RewardIdArray":[0,1,2],"RewardCountArray":[1,5,10]},
-{"FloorId":6,"CricketId":10007,"RewardIdArray":[0,1,2],"RewardCountArray":[1,5,10]},
-{"FloorId":7,"CricketId":10008,"RewardIdArray":[0,1,2],"RewardCountArray":[1,5,10]},
-{"FloorId":8,"CricketId":10009,"RewardIdArray":[0,1,2],"RewardCountArray":[1,5,10]},
-{"FloorId":9,"CricketId":10010,"RewardIdArray":[0,1,2],"RewardCountArray":[1,5,10]},
-{"FloorId":10,"CricketId":10011,"RewardIdArray":[0,1,2],"RewardCountArray":[1,5,10]},
-{"FloorId":11,"CricketId":10012,"RewardIdArray":[0,1,2],"RewardCountArray":[1,5,10]},
-{"FloorId":12,"CricketId":10013,"RewardIdArray":[0,1,2],"RewardCountArray":[1,5,10]},
-{"FloorId":13,"CricketId":10014,"RewardIdArray":[0,1,2],"RewardCountArray":[1,5,10]},
-{"FloorId":14,"CricketId":10015,"RewardIdArray":[0,1,2],"RewardCountArray":[1,5,10]},
-{"FloorId":15,"CricketId":10016,"RewardIdArray":[0,1,2],"RewardCountArray":[1,5,10]},
-{"FloorId":16,"CricketId":10017,"RewardIdArray":[0,1,2],"RewardCountArray":[1,5,10]},
-{"FloorId":17,"CricketId":10018,"RewardIdArray":[0,1,2],"RewardCountArray":[1,5,10]},
-{"FloorId":18,"CricketId":10019,"RewardIdArray":[0,1,2],"RewardCountArray":[1,5,10]},
-{"FloorId":19,"CricketId":10020,"RewardIdArray":[0,1,2],"RewardCountArray":[1,5,10]},
-{"FloorId":20,"CricketId":10021,"RewardIdArray":[0,1,2],"RewardCountArray":[1,5,10]},
-{"FloorId":21,"CricketId":10022,"RewardIdArray":[0,1,2],"RewardCountArray":[1,5,10]},
-{"FloorId":22,"CricketId":10023,"RewardIdArray":[0,1,2],"RewardCountArray":[1,5,10]},
-{"FloorId":23,"CricketId":10024,"RewardIdArray":[0,1,2],"RewardCountArray":[1,5,10]},
-{"FloorId":24,"CricketId":10025,"RewardIdArray":[0,1,2],"RewardCountArray":[1,5,10]},
-{"FloorId":25,"CricketId":10026,"RewardIdArray":[0,1,2],"RewardCountArray":[1,5,10]},
-{"FloorId":26,"CricketId":10027,"RewardIdArray":[0,1,2],"RewardCountArray":[1,5,10]},
-{"FloorId":27,"CricketId":10028,"RewardIdArray":[0,1,2],"RewardCountArray":[1,5,10]},
-{"FloorId":28,"CricketId":10029,"RewardIdArray":[0,1,2],"RewardCountArray":[1,5,10]},
-{"FloorId":29,"CricketId":10030,"RewardIdArray":[0,1,2],"RewardCountArray":[1,5,10]},
-{"FloorId":30,"CricketId":10031,"RewardIdArray":[0,1,2],"RewardCountArray":[1,5,10]},
-{"FloorId":31,"CricketId":10032,"RewardIdArray":[0,1,2],"RewardCountArray":[1,5,10]},
-{"FloorId":32,"CricketId":10033,"RewardIdArray":[0,1,2],"RewardCountArray":[1,5,10]},
-{"FloorId":33,"CricketId":10034,"RewardIdArray":[0,1,2],"RewardCountArray":[1,5,10]},
-{"FloorId":34,"CricketId":10035,"RewardIdArray":[0,1,2],"RewardCountArray":[1,5,10]},
-{"FloorId":35,"CricketId":10036,"RewardIdArray":[0,1,2],"RewardCountArray":[1,5,10]}
+	{
+		"FloorId":0,
+		"CricketId":10001,
+		"RewardIdArray":[6],
+		"RewardCountArray":[1]
+	},
+	{
+		"FloorId":1,
+		"CricketId":10002,
+		"RewardIdArray":[6],
+		"RewardCountArray":[2]
+	},
+	{
+		"FloorId":2,
+		"CricketId":10003,
+		"RewardIdArray":[6,7],
+		"RewardCountArray":[1,1]
+	},
+	{
+		"FloorId":3,
+		"CricketId":10004,
+		"RewardIdArray":[6,28],
+		"RewardCountArray":[1,1]
+	},
+	{
+		"FloorId":4,
+		"CricketId":10005,
+		"RewardIdArray":[0,29,8],
+		"RewardCountArray":[1,1,1]
+	},
+	{
+		"FloorId":5,
+		"CricketId":10006,
+		"RewardIdArray":[13],
+		"RewardCountArray":[1]
+	},
+	{
+		"FloorId":6,
+		"CricketId":10007,
+		"RewardIdArray":[13],
+		"RewardCountArray":[2]
+	},
+	{
+		"FloorId":7,
+		"CricketId":10008,
+		"RewardIdArray":[13,14],
+		"RewardCountArray":[1,1]
+	},
+	{
+		"FloorId":8,
+		"CricketId":10009,
+		"RewardIdArray":[13,28],
+		"RewardCountArray":[1,2]
+	},
+	{
+		"FloorId":9,
+		"CricketId":10010,
+		"RewardIdArray":[0,2,15],
+		"RewardCountArray":[1,1,1]
+	},
+	{
+		"FloorId":10,
+		"CricketId":10011,
+		"RewardIdArray":[9,13],
+		"RewardCountArray":[1,1]
+	},
+	{
+		"FloorId":11,
+		"CricketId":10012,
+		"RewardIdArray":[10,13],
+		"RewardCountArray":[1,2]
+	},
+	{
+		"FloorId":12,
+		"CricketId":10013,
+		"RewardIdArray":[11,16],
+		"RewardCountArray":[1,2]
+	},
+	{
+		"FloorId":13,
+		"CricketId":10014,
+		"RewardIdArray":[17,29],
+		"RewardCountArray":[2,1]
+	},
+	{
+		"FloorId":14,
+		"CricketId":10015,
+		"RewardIdArray":[0,4,17],
+		"RewardCountArray":[2,1,1]
+	},
+	{
+		"FloorId":15,
+		"CricketId":10016,
+		"RewardIdArray":[20,18,12],
+		"RewardCountArray":[1,1,1]
+	},
+	{
+		"FloorId":16,
+		"CricketId":10017,
+		"RewardIdArray":[20,19],
+		"RewardCountArray":[2,1]
+	},
+	{
+		"FloorId":17,
+		"CricketId":10018,
+		"RewardIdArray":[20,19],
+		"RewardCountArray":[2,2]
+	},
+	{
+		"FloorId":18,
+		"CricketId":10019,
+		"RewardIdArray":[20,29],
+		"RewardCountArray":[2,1]
+	},
+	{
+		"FloorId":19,
+		"CricketId":10020,
+		"RewardIdArray":[2,4,20],
+		"RewardCountArray":[2,1,2]
+	},
+	{
+		"FloorId":20,
+		"CricketId":10021,
+		"RewardIdArray":[21,20,18],
+		"RewardCountArray":[1,1,1]
+	},
+	{
+		"FloorId":21,
+		"CricketId":10022,
+		"RewardIdArray":[21,20],
+		"RewardCountArray":[2,1]
+	},
+	{
+		"FloorId":22,
+		"CricketId":10023,
+		"RewardIdArray":[21,20,17],
+		"RewardCountArray":[2,1,1]
+	},
+	{
+		"FloorId":23,
+		"CricketId":10024,
+		"RewardIdArray":[22,21,29],
+		"RewardCountArray":[1,1,1]
+	},
+	{
+		"FloorId":24,
+		"CricketId":10025,
+		"RewardIdArray":[0,2,4],
+		"RewardCountArray":[2,2,1]
+	},
+	{
+		"FloorId":25,
+		"CricketId":10026,
+		"RewardIdArray":[21,20,23],
+		"RewardCountArray":[2,1,1]
+	},
+	{
+		"FloorId":26,
+		"CricketId":10027,
+		"RewardIdArray":[21,20,24],
+		"RewardCountArray":[3,1,1]
+	},
+	{
+		"FloorId":27,
+		"CricketId":10028,
+		"RewardIdArray":[21,30,25],
+		"RewardCountArray":[3,2,1]
+	},
+	{
+		"FloorId":28,
+		"CricketId":10029,
+		"RewardIdArray":[29,21,26],
+		"RewardCountArray":[2,2,2]
+	},
+	{
+		"FloorId":29,
+		"CricketId":10030,
+		"RewardIdArray":[1,3,5],
+		"RewardCountArray":[2,2,2]
+	},
+	{
+		"FloorId":30,
+		"CricketId":10031,
+		"RewardIdArray":[21,20,27],
+		"RewardCountArray":[2,1,1]
+	},
+	{
+		"FloorId":31,
+		"CricketId":10032,
+		"RewardIdArray":[21,20,22],
+		"RewardCountArray":[3,2,1]
+	},
+	{
+		"FloorId":32,
+		"CricketId":10033,
+		"RewardIdArray":[21,20,23],
+		"RewardCountArray":[3,2,2]
+	},
+	{
+		"FloorId":33,
+		"CricketId":10034,
+		"RewardIdArray":[29,21,24],
+		"RewardCountArray":[3,2,2]
+	},
+	{
+		"FloorId":34,
+		"CricketId":10035,
+		"RewardIdArray":[1,3,5],
+		"RewardCountArray":[3,3,3]
+	}
 ]

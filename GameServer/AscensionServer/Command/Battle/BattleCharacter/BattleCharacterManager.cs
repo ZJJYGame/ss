@@ -38,10 +38,10 @@ namespace AscensionServer
             BattleCharacterEntityDict.Add(battleCharacterEntity.RoleID, battleCharacterEntity);
             return battleCharacterEntity;
         }
-        public BattleCharacterEntity CreateCharacter(TowerRobotData towerRobotData)
+        public BattleCharacterEntity CreateCharacter(Tower tower)
         {
             BattleCharacterEntity battleCharacterEntity = GameManager.ReferencePoolManager.Spawn<BattleCharacterEntity>();
-            battleCharacterEntity.Init(towerRobotData);
+            battleCharacterEntity.Init(tower);
             if (BattleCharacterEntityDict.ContainsKey(battleCharacterEntity.RoleID))
             {
                 GameManager.ReferencePoolManager.Despawn(BattleCharacterEntityDict[battleCharacterEntity.RoleID]);

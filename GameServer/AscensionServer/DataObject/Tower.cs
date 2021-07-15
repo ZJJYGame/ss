@@ -16,12 +16,16 @@ namespace AscensionServer
         public virtual int NowChooseDifficulty { get; set; }
         //当前挑战的层数(第几层)
         public virtual int NowLevel { get; set; }
+        public virtual string NowEnemyName { get; set; }
+        public virtual int NowEnemyIconId { get; set; }
         public Tower()
         {
             RoleID = 0;
             MaxDifficulty = 0;
             NowChooseDifficulty = -1;
             NowLevel = 0;
+            NowEnemyName = default;
+            NowEnemyIconId = 0;
         }
     }
 }

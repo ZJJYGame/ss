@@ -15,6 +15,8 @@ namespace AscensionServer
             Map(x => x.MaxDifficulty).Column("maxdifficulty");
             Map(x => x.NowChooseDifficulty).Column("nowchoosedifficulty");
             Map(x => x.NowLevel).Column("nowlevel");
+            Map(x => x.NowEnemyName).Column("nowEnemyName");
+            Map(x => x.NowEnemyIconId).Column("nowEnemyIconId");
         }
     }
 }

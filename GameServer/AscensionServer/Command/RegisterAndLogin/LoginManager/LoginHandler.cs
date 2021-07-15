@@ -42,19 +42,21 @@ namespace AscensionServer
                     {
                         //挤下旧的登录
                         IPeerEntity oldPeerEntity;
-                        GameManager.CustomeModule<PeerManager>().TryGetValue(roleEntity.SessionId, out oldPeerEntity);
-                        OperationData operationData = new OperationData();
-                        operationData.DataMessage = "账号在别处登录";
-                        operationData.ReturnCode = (short)ReturnCode.Success;
-                        operationData.OperationCode = (ushort)ATCmd.Logoff;
-                        oldPeerEntity.SendMessage(operationData); ;
-
-                        oldPeerEntity.TryRemove(typeof(RoleEntity));
                         GameManager.CustomeModule<RoleManager>().TryRemove(roleEntity.RoleId);
-                        //GameManager.CustomeModule<LoginManager>().S2CLoginOff(roleEntity.SessionId, "账号在别处登录", ReturnCode.Success);
+                        if (GameManager.CustomeModule<PeerManager>().TryGetValue(roleEntity.SessionId, out oldPeerEntity))
+                        {
+                            OperationData operationData = new OperationData();
+                            operationData.DataMessage = "账号在别处登录";
+                            operationData.ReturnCode = (short)ReturnCode.Success;
+                            operationData.OperationCode = (ushort)ATCmd.Logoff;
+                            oldPeerEntity.SendMessage(operationData); ;
+
+                            oldPeerEntity.TryRemove(typeof(RoleEntity));
+                            //GameManager.CustomeModule<LoginManager>().S2CLoginOff(roleEntity.SessionId, "账号在别处登录", ReturnCode.Success);
 
 
-                        Utility.Debug.LogError("挤下账号=>" + oldPeerEntity.SessionId);
+                            Utility.Debug.LogError("挤下账号=>" + oldPeerEntity.SessionId);
+                        }
                     }
                     //创建新的登录
                     roleEntity = RoleEntity.Create(role.RoleID, (peer as IPeerEntity).SessionId, role);

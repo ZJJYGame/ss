@@ -53,10 +53,16 @@ namespace AscensionServer
             IsWin = true;
             ActionCount = 1;
         }
-        public void Init(TowerRobotData towerRobotData)
+        public void Init(Tower tower)
         {
+            GameManager.CustomeModule<DataManager>().TryGetValue<Dictionary<int, TowerDifficultyData>>(out var towerDifficultyDataDict);
+            int levelId = towerDifficultyDataDict[tower.NowChooseDifficulty].FloorIdArray[tower.NowLevel];
+            GameManager.CustomeModule<DataManager>().TryGetValue<Dictionary<int, TowerFloorData>>(out var towerFloorDataDict);
+            TowerFloorData towerFloorData = towerFloorDataDict[levelId];
+            GameManager.CustomeModule<DataManager>().TryGetValue<Dictionary<int, TowerRobotData>>(out var towerRobotDataDict);
+            TowerRobotData towerRobotData = towerRobotDataDict[towerFloorData.CricketId];
             //todo机器人RoleID
-            RoleName = "爬";
+            RoleName = "第" + (tower.NowLevel + 1) + "层";
             //todo蛐蛐唯一ID
             battleBuffController = new BattleBuffController(roleBattleData);
             roleBattleData = new RoleBattleData(battleBuffController, towerRobotData, this) { };

@@ -93,12 +93,12 @@ namespace AscensionServer
             battleRoomEntity.battleResultEvent = battleResultEvent;
             battleRoomEntity.Init(roomId, matchDTO, machineData);
         }
-        public void CreateRoom(RoleDTO roleDTO,CricketDTO cricketDTO,TowerRobotData towerRobotData, Func<BattleCharacterEntity[], Dictionary<int, BattleResult>> battleResultEvent)
+        public void CreateRoom(RoleDTO roleDTO,CricketDTO cricketDTO,Tower tower, Func<BattleCharacterEntity[], Dictionary<int, BattleResult>> battleResultEvent)
         {
             BattleRoomEntity battleRoomEntity = GameManager.ReferencePoolManager.Spawn<BattleRoomEntity>();
             int roomId = GetRoomId();
             battleRoomEntity.battleResultEvent = battleResultEvent;
-            battleRoomEntity.Init(roomId, roleDTO, cricketDTO, towerRobotData);
+            battleRoomEntity.Init(roomId, roleDTO, cricketDTO, tower);
         }
 
 

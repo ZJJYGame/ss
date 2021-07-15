@@ -45,13 +45,15 @@ namespace AscensionServer
                 BattleController.StartBattle();
             }));
         }
-        public void Init(int roomId,RoleDTO roleDTO,CricketDTO cricketDTO,TowerRobotData towerRobotData)
+        public void Init(int roomId,RoleDTO roleDTO,CricketDTO cricketDTO,Tower tower)
         {
             this.roomId = roomId;
             battleCharacterEntity_one = GameManager.CustomeModule<BattleCharacterManager>().CreateCharacter(roleDTO, cricketDTO);
-            battleCharacterEntity_Two = GameManager.CustomeModule<BattleCharacterManager>().CreateCharacter(towerRobotData);
+            battleCharacterEntity_Two = GameManager.CustomeModule<BattleCharacterManager>().CreateCharacter(tower);
             BattleController = new BattleController();
             BattleController.InitController(this,battleCharacterEntity_one, battleCharacterEntity_Two);
+
+
             ThreadPool.QueueUserWorkItem(new WaitCallback((obj) => {
                 BattleController.StartBattle();
             }));

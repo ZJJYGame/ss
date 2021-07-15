@@ -243,6 +243,7 @@
     <Compile Include="Command\Match\TimerManager.cs" />
     <Compile Include="Command\NoviceGuideManager\NoviceGuideManager.cs" />
     <Compile Include="Command\OnTimeEventManager\IOnTimeEvent.cs" />
+    <Compile Include="Command\OnTimeEventManager\OnTimeEventAttribute.cs" />
     <Compile Include="Command\OnTimeEventManager\OnTimeEventManager.cs" />
     <Compile Include="Command\OnTimeEventManager\OnTimeEventStruct.cs" />
     <Compile Include="Command\Rank\RankManager.cs" />

@@ -132,6 +132,8 @@ namespace AscensionServer
             var result = TryGetValue(sessionId, out var peer);
             if (result)
                 peer.SendMessage(message);
+            else
+                Utility.Debug.LogError("peer不存在，无法发送");
             return result;
         }
         /// <summary>

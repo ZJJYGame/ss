@@ -7,14 +7,17 @@ using Cosmos;
 using AscensionProtocol;
 using Protocol;
 using RedisDotNet;
+using System.Reflection;
 
 namespace AscensionServer
 {
     [CustomeModule]
     public class OnTimeEventManager : Module<OnTimeEventManager>
     {
+
         public override void OnPreparatory()
         {
+
             //清除战斗获得金钱限制的事件
             RefreshGetMoneyLimitEvent();
             //清除重置 每日任务的事件

@@ -17,6 +17,7 @@ namespace AscensionServer
         /// <param name="roleid"></param>
         public static void GetRoleCricket(int roleid, CricketOperateType opType)
         {
+            Utility.Debug.LogError("开始获取蛐蛐数据");
             var nHCriteriaRole = xRCommon.xRNHCriteria("RoleID", roleid);
             var roleCricket = xRCommon.xRCriteria<RoleCricket>(nHCriteriaRole);
             Dictionary<int, CricketDTO> cricketsDict = new Dictionary<int, CricketDTO>();
@@ -52,6 +53,7 @@ namespace AscensionServer
                 messageDict.Add((byte)opType, Utility.Json.ToJson(dataDict));
                 xRCommon.xRS2CSend(roleid, (ushort)ATCmd.SyncCricket, (short)ReturnCode.Success, messageDict);
             }
+            Utility.Debug.LogError("蛐蛐信息获取完成");
         }
         /// <summary>
         /// 添加新蛐蛐

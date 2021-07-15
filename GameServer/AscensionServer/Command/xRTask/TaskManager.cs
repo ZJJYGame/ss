@@ -9,7 +9,7 @@ using Protocol;
 namespace AscensionServer
 {
     [CustomeModule]
-    public partial class TaskManager : Module<TaskManager>
+    public partial class TaskManager : Module<TaskManager>,IOnTimeEvent
     {
         public override void OnPreparatory() => CommandEventCore.Instance.AddEventListener((ushort)ATCmd.SyncTask, C2STask);
 
@@ -69,6 +69,11 @@ namespace AscensionServer
                 taskItemDIct.Add(resultTaskDataList[i].TaskId, taskItemDTO);
             }
             return taskItemDIct;
+        }
+
+        public void OnTimeEventHandler()
+        {
+
         }
     }
 }

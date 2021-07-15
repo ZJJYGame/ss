@@ -15,6 +15,10 @@ namespace AscensionProtocol
         public virtual int NowChooseDifficulty { get; set; }
         //当前挑战的层数
         public virtual int NowLevel { get; set; }
+        //当前敌人名字对应的id
+        public virtual string NowEnemyName { get; set; }
+        //当前敌人头像模型对应的id
+        public virtual int NowEnemyIconId { get; set; }
         //剩余挑战次数
         public virtual int RemainChallengeCount { get; set; }
         public virtual int ChooseCricketId { get; set; }

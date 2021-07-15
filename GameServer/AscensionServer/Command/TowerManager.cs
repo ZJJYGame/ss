@@ -47,7 +47,9 @@ namespace AscensionServer
                 MaxDifficulty = tower.MaxDifficulty,
                 NowChooseDifficulty = tower.NowChooseDifficulty,
                 NowLevel = tower.NowLevel,
-                RemainChallengeCount = remainChallengeCount
+                RemainChallengeCount = remainChallengeCount,
+                NowEnemyName=tower.NowEnemyName,
+                NowEnemyIconId=tower.NowEnemyIconId
             };
             OperationData operationData = new OperationData();
             operationData.DataMessage = Utility.Json.ToJson(result);
@@ -74,6 +76,11 @@ namespace AscensionServer
                 return;
             tower.NowChooseDifficulty = chooseDifficultyId;
             tower.NowLevel = 0;
+
+            //随机敌人的名字头像模型
+            RandomEnemyInfo(tower);
+
+
             remainChallengeCount--;
             NHibernateQuerier.Update(tower);
             await RedisHelper.Hash.HashSetAsync<int>(RedisKeyDefine._TowerChallengeCountPerfix, roleId.ToString(), remainChallengeCount);
@@ -83,7 +90,9 @@ namespace AscensionServer
                 MaxDifficulty = tower.MaxDifficulty,
                 NowChooseDifficulty = tower.NowChooseDifficulty,
                 NowLevel = tower.NowLevel,
-                RemainChallengeCount = remainChallengeCount
+                RemainChallengeCount = remainChallengeCount,
+                NowEnemyName = tower.NowEnemyName,
+                NowEnemyIconId = tower.NowEnemyIconId
             };
             OperationData operationData = new OperationData();
             operationData.DataMessage = Utility.Json.ToJson(result);
@@ -109,6 +118,8 @@ namespace AscensionServer
                 MaxDifficulty = tower.MaxDifficulty,
                 NowChooseDifficulty = tower.NowChooseDifficulty,
                 NowLevel = tower.NowLevel,
+                NowEnemyName = tower.NowEnemyName,
+                NowEnemyIconId = tower.NowEnemyIconId
             };
             OperationData operationData = new OperationData();
             operationData.DataMessage = Utility.Json.ToJson(result);
@@ -123,13 +134,7 @@ namespace AscensionServer
             NHCriteria nHCriteriaRole = xRCommon.xRNHCriteria("RoleID", roleId);
             NHCriteria nHCriteriaCricket = xRCommon.xRNHCriteria("ID", chooseCricketId);
             Tower tower = xRCommon.xRCriteria<Tower>(nHCriteriaRole);
-            Utility.Debug.LogError(Utility.Json.ToJson(tower));
-            GameManager.CustomeModule<DataManager>().TryGetValue<Dictionary<int, TowerDifficultyData>>(out var towerDifficultyDataDict);
-            int levelId = towerDifficultyDataDict[tower.NowChooseDifficulty].FloorIdArray[tower.NowLevel];
-            GameManager.CustomeModule<DataManager>().TryGetValue<Dictionary<int, TowerFloorData>>(out var towerFloorDataDict);
-            TowerFloorData towerFloorData = towerFloorDataDict[levelId];
-            GameManager.CustomeModule<DataManager>().TryGetValue<Dictionary<int, TowerRobotData>>(out var towerRobotDataDict);
-            TowerRobotData towerRobotData = towerRobotDataDict[towerFloorData.CricketId];
+            Utility.Debug.LogError(Utility.Json.ToJson(tower));   
             Role role = xRCommon.xRCriteria<Role>(nHCriteriaRole);
             RoleDTO roleDTO = Utility.Json.ToObject<RoleDTO>(Utility.Json.ToJson(role));
             Cricket cricket = xRCommon.xRCriteria<Cricket>(nHCriteriaCricket);
@@ -146,14 +151,18 @@ namespace AscensionServer
                 SpecialDict = Utility.Json.ToObject<Dictionary<int, int>>(cricket.SpecialDict),
             };
             //开启战斗
-            GameManager.CustomeModule<BattleRoomManager>().CreateRoom(roleDTO, cricketDTO, towerRobotData, BattleCombat);
+            GameManager.CustomeModule<BattleRoomManager>().CreateRoom(roleDTO, cricketDTO, tower, BattleCombat);
         }
         void AddTowerLevelS2C(Tower tower)
         {
             GameManager.CustomeModule<DataManager>().TryGetValue<Dictionary<int, TowerDifficultyData>>(out var towerDifficultyDataDict);
             TowerDifficultyData towerDifficultyData = towerDifficultyDataDict[tower.NowChooseDifficulty];
             if (towerDifficultyData.FloorIdArray.Count > tower.NowLevel + 1)//还有下一层挑战
+            {
                 tower.NowLevel++;
+                //随机敌人的名字头像模型
+                RandomEnemyInfo(tower);
+            }
             else //该难度挑战结束
             {
                 tower.NowChooseDifficulty = -1;
@@ -169,6 +178,8 @@ namespace AscensionServer
                 MaxDifficulty = tower.MaxDifficulty,
                 NowChooseDifficulty = tower.NowChooseDifficulty,
                 NowLevel = tower.NowLevel,
+                NowEnemyName = tower.NowEnemyName,
+                NowEnemyIconId = tower.NowEnemyIconId
             };
             OperationData operationData = new OperationData();
             operationData.DataMessage = Utility.Json.ToJson(result);
@@ -269,6 +280,17 @@ namespace AscensionServer
                     ExplorationManager.xRAddExploration(tower.RoleID, null, new Dictionary<int, int>() { {itemId, count } });
             }
             return awardItemDict;
+        }
+
+        void RandomEnemyInfo(Tower tower)
+        {
+            //随机敌人的名字头像模型
+            GameManager.CustomeModule<DataManager>().TryGetValue<List<CricketNameData>>(out var cricketNameDataList);
+            int randomValue = Utility.Algorithm.CreateRandomInt(0, cricketNameDataList.Count);
+            tower.NowEnemyName = cricketNameDataList[randomValue].CricketName;
+            GameManager.CustomeModule<DataManager>().TryGetValue<List<CricketHeadPortraitData>>(out var cricketHeadPortraitDataList);
+            randomValue = Utility.Algorithm.CreateRandomInt(0, cricketHeadPortraitDataList.Count);
+            tower.NowEnemyIconId = cricketHeadPortraitDataList[randomValue].CricketID;
         }
     }
 }

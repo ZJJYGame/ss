@@ -84,6 +84,7 @@ namespace AscensionServer
 #endif
         public void SendMessage(OperationData data)
         {
+            Utility.Debug.LogError("roleEntity" + RoleId + "给会话" + SessionId + "发送数据");
             GameManager.CustomeModule<PeerManager>().SendMessage(SessionId,  data);
         }
         public void SendEvent(byte opCode, Dictionary<byte, object> data)

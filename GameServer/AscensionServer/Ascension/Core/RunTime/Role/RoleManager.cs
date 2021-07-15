@@ -123,6 +123,8 @@ namespace AscensionServer
             var result = TryGetValue(roleId, out var role);
             if (result)
                 role.SendMessage(message);
+            else
+                Utility.Debug.LogError("roleEntity不存在，无法发送");
             return result;
         }
         /// <summary>
