@@ -9,8 +9,8 @@ namespace AscensionProtocol
     [Serializable]
     public class UserDTO
     {
-        public virtual string Account { get; set; }
-        public virtual string Password { get; set; }
+        public virtual int Account { get; set; }
+        public virtual string Name { get; set; }
         public virtual string UUID { get; set; }
         public virtual int RoleID { get; set; }
     }

@@ -127,6 +127,100 @@ namespace AscensionServer
             }
         }
 
+        /// <summary>
+        /// 注册添加探索
+        /// </summary>
+        /// <param name="roleId"></param>
+        /// <param name="ItemInfo"></param>
+        /// <param name="TimeAndCatchpropInfo"></param>
+        public static void xRRegisterAddExploration(int roleId, Dictionary<int, ExplorationItemDTO> ItemInfo, Dictionary<int, int> TimeAndCatchpropInfo = null)
+        {
+            var nHcriteria = xRCommon.xRNHCriteria("RoleID", roleId);
+            if (xRCommon.xRVerify<Role>(nHcriteria))
+            {
+                var xRserver = xRCommon.xRCriteria<Exploration>(nHcriteria);
+                var xrDict = Utility.Json.ToObject<Dictionary<int, ExplorationItemDTO>>(xRserver.ExplorationItemDict);
+                var xrPropDict = Utility.Json.ToObject<Dictionary<int, int>>(xRserver.CatchAndTimeDict);
+                //这个iteminfo为探索的一个初始值
+                if (ItemInfo != null)
+                {
+                    foreach (var info in ItemInfo)
+                    {
+                        //info.Key为区域号。0~3
+                        if (!xrDict.ContainsKey(info.Key))
+                        {
+                            xrDict[info.Key] = info.Value;
+                            GameManager.CustomeModule<DataManager>().TryGetValue<Dictionary<int, ExplorationData>>(out var setExploration);
+                            for (int i = 0; i < xrDict[info.Key].ItemId.Count; i++)
+                            {
+                                int xrRandom = 1;//这个地方处理   默认都是一个 添加的时候事件的时候  通过事件id  给定数量    这个地方随机没改呢
+
+                                if (setExploration[xrDict[info.Key].ItemId.ToList()[i].Key].Number.Count == 2)
+                                {
+                                    xrRandom = RandomManager(info.Key, setExploration[xrDict[info.Key].ItemId.ToList()[i].Key].Number[0], setExploration[xrDict[info.Key].ItemId.ToList()[i].Key].Number[1]);
+                                }
+                                //应该是这个地方//那为什么这里加道具的 随机在下面
+                                xrDict[info.Key].ItemId[xrDict[info.Key].ItemId.ToList()[i].Key] = xrRandom;
+                                switch (setExploration[xrDict[info.Key].ItemId.ToList()[i].Key].EventType)
+                                {
+                                    case "GetPropA":
+                                        if (setExploration[xrDict[info.Key].ItemId.ToList()[i].Key].Number.Count == 2)
+                                        {
+                                            xrDict[info.Key].ItemId[xrDict[info.Key].ItemId.ToList()[i].Key] = RandomManager(info.Key, setExploration[xrDict[info.Key].ItemId.ToList()[i].Key].Number[0], setExploration[xrDict[info.Key].ItemId.ToList()[i].Key].Number[1]);
+                                        }
+                                        else
+                                        {
+                                            xrDict[info.Key].ItemId[xrDict[info.Key].ItemId.ToList()[i].Key] = setExploration[xrDict[info.Key].ItemId.ToList()[i].Key].Number[0];
+                                        }
+                                        break;
+                                    case "GetPropB":
+                                        break;
+                                    case "GetPropC":
+
+                                        break;
+                                    case "GetCricket"://全局id
+                                    case "GetSkill":
+                                        xrDict[info.Key].ItemId[xrDict[info.Key].ItemId.ToList()[i].Key] = 1;
+                                        break;
+                                    case "AddExp":
+                                        //这儿是算探索经验增加的
+                                        var nHcriteriaID = xRCommon.xRNHCriteria("ID", info.Value.CustomId);
+                                        var xRserverGrade = xRCommon.xRCriteria<Cricket>(nHcriteriaID);
+                                        //每个区域的最低经验
+                                        var gradeValue = info.Key == 0 ? 100 : info.Key == 1 ? 400 : info.Key == 2 ? 800 : 1600;
+                                        //探索获得经验比
+                                        var percentValue = setExploration[xrDict[info.Key].ItemId.ToList()[i].Key].Number[0];
+                                        //蛐蛐等级平方*经验比
+                                        var levbelValue = xRserverGrade.LevelID * xRserverGrade.LevelID * percentValue;
+                                        //区域加成*蛐蛐等级平方*经验比即为最后获得的经验
+                                        var expValue = info.Key == 0 ? levbelValue * 6 : info.Key == 1 ? levbelValue * 12 : info.Key == 2 ? levbelValue * 18 : levbelValue * 24;
+                                        xrDict[info.Key].ItemId[xrDict[info.Key].ItemId.ToList()[i].Key] = expValue / 100 < gradeValue ? gradeValue : expValue / 100;
+                                        break;
+                                }
+                            }
+                        }
+                        NHibernateQuerier.Update(new Exploration() { RoleID = roleId, ExplorationItemDict = Utility.Json.ToJson(xrDict), UnLockDict = xRserver.UnLockDict, CatchAndTimeDict = xRserver.CatchAndTimeDict });
+                    }
+                }
+
+                if (TimeAndCatchpropInfo != null)  //你直接调用这个方法不就可以了嘛
+                {
+                    foreach (var prop in TimeAndCatchpropInfo)
+                    {
+                        if (!xrPropDict.ContainsKey(prop.Key))
+                        {
+                            xrPropDict[prop.Key] = prop.Value;
+                        }
+                        else
+                        {
+                            xrPropDict[prop.Key] += prop.Value;
+                        }
+                        NHibernateQuerier.Update(new Exploration() { RoleID = roleId, ExplorationItemDict = Utility.Json.ToJson(xrDict), UnLockDict = xRserver.UnLockDict, CatchAndTimeDict = Utility.Json.ToJson(xrPropDict) });
+                    }
+                }
+            }
+        }
+
 
         /// <summary>
         /// 更新探索

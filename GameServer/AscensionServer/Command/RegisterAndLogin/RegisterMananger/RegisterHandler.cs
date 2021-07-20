@@ -107,7 +107,7 @@ namespace AscensionServer
                 OperationData operationData = new OperationData();
                 operationData.DataMessage = Utility.Json.ToJson(role);
                 operationData.ReturnCode = (byte)ReturnCode.Success;
-                operationData.OperationCode = (ushort)ATCmd.Register;
+                //operationData.OperationCode = (ushort)ATCmd.Register;
                 GameManager.CustomeModule<PeerManager>().SendMessage((peer as IPeerEntity).SessionId, operationData);
             }
             else
@@ -115,7 +115,7 @@ namespace AscensionServer
                 OperationData operationData = new OperationData();
                 operationData.DataMessage = "账号已存在";
                 operationData.ReturnCode = (byte)ReturnCode.Fail;
-                operationData.OperationCode = (ushort)ATCmd.Register;
+                //operationData.OperationCode = (ushort)ATCmd.Register;
                 Utility.Debug.LogInfo("yzqData发送失败");
                 GameManager.CustomeModule<PeerManager>().SendMessage((peer as IPeerEntity).SessionId, operationData);
             }

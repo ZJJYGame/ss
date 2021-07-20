@@ -11,7 +11,7 @@ namespace AscensionServer
     {
         public UserMap()
         {
-            Id(x => x.UUID).GeneratedBy.UuidHex("N").Column("uuid");
+            Id(x => x.UUID).GeneratedBy.Assigned().Column("uuid");
             Map(x => x.Account).Unique().Column("account");
             Map(x => x.Password).Column("password");
             Map(x => x.RoleID).Column("roleid");

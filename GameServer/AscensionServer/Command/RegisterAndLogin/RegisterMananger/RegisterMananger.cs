@@ -15,7 +15,7 @@ namespace AscensionServer
     {
         public override void OnPreparatory()
         {
-            CommandEventCore.Instance.AddEventListener((ushort)ATCmd.Register, C2SRegister);
+            //CommandEventCore.Instance.AddEventListener((ushort)ATCmd.Register, C2SRegister);
         }
 
         public void C2SRegister(OperationData opData)
@@ -24,7 +24,7 @@ namespace AscensionServer
             var dp = opData.DataContract;
             dp.Messages.TryGetValue((byte)ParameterCode.ClientPeer, out var peer);
             Utility.Debug.LogInfo("yzqData/////"+ message.Account);
-            RegisterHandler.RegisterRole(message.Account, message.Password, peer);
+            //RegisterHandler.RegisterRole(message.Account, message.Password, peer);
         }
 
         public void S2CRegister(int roleid, string message,ReturnCode returnCode)

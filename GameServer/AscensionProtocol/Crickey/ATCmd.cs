@@ -12,9 +12,9 @@ namespace AscensionProtocol
     public enum ATCmd:byte//区分请求和响应
     {
         Default =0,
-        Login = 1,
+        TapTapLogin = 1,
         Logoff=2,
-        Register=3,
+        Register= 3,
         /// <summary>
         /// 同步当前这个角色的数据
         /// </summary>

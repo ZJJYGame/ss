@@ -75,6 +75,33 @@ namespace AscensionServer
                 xRGetInventory(roleId);
             }
         }
+        /// <summary>
+        /// 注册添加背包
+        /// </summary>
+        /// <param name="roleId"></param>
+        /// <param name="ItemInfo"></param>
+        public static void xRRegisterAddInventory(int roleId, Dictionary<int, ItemDTO> ItemInfo)
+        {
+            var nHcriteria = xRCommon.xRNHCriteria("RoleID", roleId);
+            if (xRCommon.xRVerify<Role>(nHcriteria))
+            {
+                var xRserver = xRCommon.xRCriteria<Inventory>(nHcriteria);
+                var xrDict = Utility.Json.ToObject<Dictionary<int, ItemDTO>>(xRserver.ItemDict);
+                foreach (var info in ItemInfo)
+                {
+                    if (!xrDict.ContainsKey(info.Key))
+                    {
+                        xrDict[info.Key] = info.Value;
+                    }
+                    else
+                    {
+                        xrDict[info.Key].ItemAmount += info.Value.ItemAmount;
+                    }
+                    NHibernateQuerier.Update(new Inventory() { RoleID = roleId, ItemDict = Utility.Json.ToJson(xrDict) });
+                }
+                
+            }
+        }
 
         /// <summary>
         /// 更新背包

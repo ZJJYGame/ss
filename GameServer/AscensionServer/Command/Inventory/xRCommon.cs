@@ -74,5 +74,14 @@ namespace AscensionServer
             GameManager.CustomeModule<RoleManager>().SendMessage(roleId, opData);
         }
 
+        public static void xRS2CRegisterSend(int SessionId, ushort op, short rc, object tip = null)
+        {
+            OperationData opData = new OperationData();
+            opData.OperationCode = op;
+            opData.ReturnCode = rc;
+            opData.DataMessage = rc != (short)ReturnCode.Success ? tip : tip;
+            GameManager.CustomeModule<PeerManager>().SendMessage(SessionId, opData);
+        }
+
     }
 }
