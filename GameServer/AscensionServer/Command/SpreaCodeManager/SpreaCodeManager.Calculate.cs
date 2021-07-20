@@ -80,28 +80,28 @@ namespace AscensionServer
                 }
             }
             var numDict = Utility.Json.ToObject<Dictionary<int, int>>(spreaCode.SpreaPlayers);
-            if (spreaCode.SpreaNum >= 10)
+            if (spreaCode.SpreaNum >= 1)
             {
                 if (numDict[6002] == -1)
                 {
                     numDict[6002] = 0;
                 }
             }
-            if (spreaCode.SpreaNum >= 30)
+            if (spreaCode.SpreaNum >= 3)
             {
                 if (numDict[6003] == -1)
                 {
                     numDict[6003] = 0;
                 }
             }
-            if (spreaCode.SpreaNum >= 50)
+            if (spreaCode.SpreaNum >= 5)
             {
                 if (numDict[6004] == -1)
                 {
                     numDict[6004] = 0;
                 }
             }
-            if (spreaCode.SpreaNum >= 100)
+            if (spreaCode.SpreaNum >= 10)
             {
                 if (numDict[6005] == -1)
                 {

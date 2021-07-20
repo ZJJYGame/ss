@@ -563,6 +563,10 @@ namespace AscensionServer
             cricketStatuTemp.Crt = ((cricketAptitude.Dex + cricketPoint.Dex + cricketPointTemp.Dex) * (300 - (2 * (100 - cricketAptitude.DexAptitude))) / 1000000f) + statusPercentage.Crt / 100;
             cricketStatuTemp.Eva = ((cricketAptitude.Dex + cricketPoint.Dex + cricketPointTemp.Dex) * (300 - (2 * (100 - cricketAptitude.DexAptitude))) / 1000000f) + statusPercentage.Eva / 100;
             cricketStatuTemp.Speed = (int)(statusFixed.Speed + StatusDict[1].Speed - ((cricketAptitude.Dex + cricketPoint.Dex + cricketPointTemp.Dex) * (1.5f - (0.01 * (100 - cricketAptitude.DexAptitude))))) * (100 + statusPercentage.Speed) / 100;
+            if (cricketStatuTemp.Speed<=500)
+            {
+                cricketStatuTemp.Speed = 500;
+            }
             cricketStatuTemp.ReduceAtk = (int)(statusFixed.ReduceAtk + StatusDict[1].ReduceAtk) * (100 + statusPercentage.ReduceAtk) / 100;
             cricketStatuTemp.ReduceDef = (int)(statusFixed.ReduceDef + StatusDict[1].ReduceDef) * (100 + statusPercentage.ReduceDef) / 100;
             cricketStatuTemp.Rebound = (int)(statusFixed.Rebound + StatusDict[1].Rebound) * (100 + statusPercentage.Rebound) / 100;
