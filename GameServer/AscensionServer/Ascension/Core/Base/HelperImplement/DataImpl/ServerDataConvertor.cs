@@ -93,6 +93,9 @@ namespace AscensionServer
 
                 GameManager.CustomeModule<DataManager>().TryGetValue(typeof(TowerAwardData).Name, out var towerAwardData);
                 var towerAwardDataDict = TransObject<List<TowerAwardData>>(towerAwardData).ToDictionary(key => key.RewardID, value => value);
+
+                GameManager.CustomeModule<DataManager>().TryGetValue(typeof(MatchRobotNameData).Name, out var matchRobotNameData);
+                var matchRobotNameDataList = TransObject<List<MatchRobotNameData>>(matchRobotNameData);
                 #endregion
 
                 #region 储存方式 
@@ -120,6 +123,7 @@ namespace AscensionServer
                 GameManager.CustomeModule<DataManager>().TryAdd(towerRobotDataDict);
                 GameManager.CustomeModule<DataManager>().TryAdd(towerFloorDataDict);
                 GameManager.CustomeModule<DataManager>().TryAdd(towerAwardDataDict);
+                GameManager.CustomeModule<DataManager>().TryAdd(matchRobotNameDataList);
                 #endregion
 
                 #region 获取方式
