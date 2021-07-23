@@ -16,7 +16,6 @@ namespace AscensionServer
         public virtual int HeadPortrait  { get; set; }
         public Role()
         {
-            RoleID = -1;
             RoleName = "";
             NoviceGuide = 1;
         }

@@ -216,7 +216,7 @@ namespace AscensionServer
             GameManager.CustomeModule<DataManager>().TryGetValue<Dictionary<int, CricketHeadPortraitData>>(out var CricketHeadDict);
 
             var userObj = new User() { UUID=uuid};
-            var role = new Role() { RoleName = name };
+            var role = new Role() {  };
             var roleAsset = new RoleAssets();
             var cricket = new Cricket();
             var roleCricketObj = new RoleCricketDTO();
@@ -227,97 +227,102 @@ namespace AscensionServer
             var cricketAddition = new CricketAddition();
             var spreacode = new SpreaCode();
             #region 注册逻辑
-            userObj = NHibernateQuerier.Insert(userObj);
             var headList = HeadPortraitDict.Keys.ToList<int>();
             var num = Utility.Algorithm.CreateRandomInt(0, headList.Count);
             Utility.Debug.LogInfo("头像ID" + HeadPortraitDict[headList[num]].PlayerHeadID);
             role.HeadPortrait = HeadPortraitDict[headList[num]].PlayerHeadID;
             role = NHibernateQuerier.Insert(role);
-            roleAsset.RoleID = role.RoleID;
-            NHibernateQuerier.Insert(roleAsset);
-            userObj.RoleID = role.RoleID;
-            NHibernateQuerier.Update(userObj);
-            #region 待换
-            cricket.Roleid = role.RoleID;
-            #region
-            var headlist = CricketHeadDict.Keys.ToList<int>();
-            var headnum = Utility.Algorithm.CreateRandomInt(0, headlist.Count);
-            cricket.HeadPortraitID = CricketHeadDict[headlist[headnum]].CricketID;
-            var namelist = NameDict.Keys.ToList<int>();
-            var namenum = Utility.Algorithm.CreateRandomInt(0, namelist.Count);
-            cricket.CricketName = NameDict[namelist[namenum]].CricketName;
-
-            #endregion
-            cricket = NHibernateQuerier.Insert(cricket);
-            roleCricketObj.CricketList[0] = cricket.ID;
-            roleCricket.RoleID = role.RoleID;
-            roleCricket.CricketList = Utility.Json.ToJson(roleCricketObj.CricketList);
-            roleCricket.TemporaryCrickets = Utility.Json.ToJson(roleCricketObj.TemporaryCrickets);
-            NHibernateQuerier.Insert(roleCricket);
-            //cricketStatus= RoleCricketManager.CalculateStutas(cricketAptitude, cricketPoint, cricketAddition);
-            cricketStatus = RoleCricketManager.SkillAdditionStatus(cricket, cricketAptitude, cricketPoint, cricketAddition, out var cricketPointTemp);
-            Utility.Debug.LogInfo("yzqData发送成功" + (peer as IPeerEntity).SessionId);
-            cricketStatus.CricketID = cricket.ID;
-            NHibernateQuerier.Insert(cricketStatus);
-            cricketAptitude.CricketID = cricket.ID;
-            #region 
-            cricketAptitude.SkillStr = cricketPointTemp.Str;
-            cricketAptitude.SkillCon = cricketPointTemp.Con;
-            cricketAptitude.SkillDef = cricketPointTemp.Def;
-            cricketAptitude.SkillDex = cricketPointTemp.Dex;
-            #endregion
-            NHibernateQuerier.Insert(cricketAptitude);
-            cricketPoint.CricketID = cricket.ID;
-            NHibernateQuerier.Insert(cricketPoint);
-            cricketAddition.CricketID = cricket.ID;
-            NHibernateQuerier.Insert(cricketAddition);
-            #endregion
-            var battleCombat = NHibernateQuerier.Insert(new BattleCombat() { RoleID = role.RoleID });
-            #region 插入背包和每日任务 以及探索  以及 战斗结束表格
-            NHibernateQuerier.Insert(new Inventory() { RoleID = role.RoleID });
-            InventoryManager.xRRegisterAddInventory(role.RoleID, new Dictionary<int, ItemDTO> { { 1201, new ItemDTO() { ItemAmount = 1 } }, { 1001, new ItemDTO() { ItemAmount = 1 } } });
-            NHibernateQuerier.Insert(new Exploration() { RoleID = role.RoleID });
-            ExplorationManager.xRRegisterAddExploration(role.RoleID, new Dictionary<int, ExplorationItemDTO>(), new Dictionary<int, int> { { 1901, 1 }, { 1902, 1 }, { 1903, 1 }, { 1801, 10 }, { 1802, 10 }, { 1803, 10 }, { 1804, 2 } });
-            #endregion
-            #region 推广初始化
-            spreacode.RoleID = role.RoleID;
-            spreacode.CodeID = GameManager.CustomeModule<SpreaCodeManager>().RandomCodeID(role.RoleID);
-            var dict = new Dictionary<int, int>() { };
-            dict.Add(6002, -1);//10人奖励
-            dict.Add(6003, -1);//30人奖励
-            dict.Add(6004, -1);//50人奖励
-            dict.Add(6005, -1);//100人奖励
-            spreacode.SpreaPlayers = Utility.Json.ToJson(dict);
-            NHibernateQuerier.Insert(spreacode);
-            #endregion
-            #region 爬塔初始化
-            NHibernateQuerier.Insert(new Tower() { RoleID = role.RoleID });
-            #endregion
-            RoleCricketDTO roleCricketDTO = new RoleCricketDTO();
-            roleCricketDTO.RoleID = roleCricket.RoleID;
-            roleCricketDTO.CricketList = Utility.Json.ToObject<List<int>>(roleCricket.CricketList);
-            roleCricketDTO.TemporaryCrickets = Utility.Json.ToObject<List<int>>(roleCricket.TemporaryCrickets);
-            Dictionary<byte, string> dataDict = new Dictionary<byte, string>();
-            dataDict.Add((byte)ParameterCode.Role, Utility.Json.ToJson(role));
-            dataDict.Add((byte)ParameterCode.RoleAsset, Utility.Json.ToJson(roleAsset));
-            dataDict.Add((byte)ParameterCode.RoleCricket, Utility.Json.ToJson(roleCricketDTO));
-            dataDict.Add((byte)ParameterCode.RoleBattleCombat, Utility.Json.ToJson(battleCombat));
-            #region 
-
-            //创建新的登录
-            var roleEntity = RoleEntity.Create(role.RoleID, (peer as IPeerEntity).SessionId, role);
-            GameManager.CustomeModule<RoleManager>().TryAdd(roleEntity.RoleId, roleEntity);
-            IPeerEntity peerEntity;
-            var isPeerExist = GameManager.CustomeModule<PeerManager>().TryGetValue((peer as IPeerEntity).SessionId, out peerEntity);
-            if (isPeerExist)
+            if (role.RoleID!=0)
             {
-                peerEntity.TryAdd(typeof(RoleEntity), roleEntity);
-                Utility.Debug.LogError("yzqData登录成功RoleID:" + roleEntity.SessionId);
-                GameManager.CustomeModule<LoginManager>().S2CLogin((peer as IPeerEntity).SessionId, Utility.Json.ToJson(dataDict), ReturnCode.Success);
-            }
+                role.RoleName = name;
+                userObj = NHibernateQuerier.Insert(userObj);
+                roleAsset.RoleID = role.RoleID;
+                NHibernateQuerier.Insert(roleAsset);
+                userObj.RoleID = role.RoleID;
+                NHibernateQuerier.Update(userObj);
+                #region 待换
+                cricket.Roleid = role.RoleID;
+                #region
+                var headlist = CricketHeadDict.Keys.ToList<int>();
+                var headnum = Utility.Algorithm.CreateRandomInt(0, headlist.Count);
+                cricket.HeadPortraitID = CricketHeadDict[headlist[headnum]].CricketID;
+                var namelist = NameDict.Keys.ToList<int>();
+                var namenum = Utility.Algorithm.CreateRandomInt(0, namelist.Count);
+                cricket.CricketName = NameDict[namelist[namenum]].CricketName;
 
-            #endregion
-            #endregion
+                #endregion
+                cricket = NHibernateQuerier.Insert(cricket);
+                roleCricketObj.CricketList[0] = cricket.ID;
+                roleCricket.RoleID = role.RoleID;
+                roleCricket.CricketList = Utility.Json.ToJson(roleCricketObj.CricketList);
+                roleCricket.TemporaryCrickets = Utility.Json.ToJson(roleCricketObj.TemporaryCrickets);
+                NHibernateQuerier.Insert(roleCricket);
+                //cricketStatus= RoleCricketManager.CalculateStutas(cricketAptitude, cricketPoint, cricketAddition);
+                cricketStatus = RoleCricketManager.SkillAdditionStatus(cricket, cricketAptitude, cricketPoint, cricketAddition, out var cricketPointTemp);
+                Utility.Debug.LogInfo("yzqData发送成功" + (peer as IPeerEntity).SessionId);
+                cricketStatus.CricketID = cricket.ID;
+                NHibernateQuerier.Insert(cricketStatus);
+                cricketAptitude.CricketID = cricket.ID;
+                #region 
+                cricketAptitude.SkillStr = cricketPointTemp.Str;
+                cricketAptitude.SkillCon = cricketPointTemp.Con;
+                cricketAptitude.SkillDef = cricketPointTemp.Def;
+                cricketAptitude.SkillDex = cricketPointTemp.Dex;
+                #endregion
+                NHibernateQuerier.Insert(cricketAptitude);
+                cricketPoint.CricketID = cricket.ID;
+                NHibernateQuerier.Insert(cricketPoint);
+                cricketAddition.CricketID = cricket.ID;
+                NHibernateQuerier.Insert(cricketAddition);
+                #endregion
+                var battleCombat = NHibernateQuerier.Insert(new BattleCombat() { RoleID = role.RoleID });
+                #region 插入背包和每日任务 以及探索  以及 战斗结束表格
+                NHibernateQuerier.Insert(new Inventory() { RoleID = role.RoleID });
+                InventoryManager.xRRegisterAddInventory(role.RoleID, new Dictionary<int, ItemDTO> { { 1201, new ItemDTO() { ItemAmount = 1 } }, { 1001, new ItemDTO() { ItemAmount = 1 } } });
+                NHibernateQuerier.Insert(new Exploration() { RoleID = role.RoleID });
+                ExplorationManager.xRRegisterAddExploration(role.RoleID, new Dictionary<int, ExplorationItemDTO>(), new Dictionary<int, int> { { 1901, 1 }, { 1902, 1 }, { 1903, 1 }, { 1801, 10 }, { 1802, 10 }, { 1803, 10 }, { 1804, 2 } });
+                #endregion
+                #region 推广初始化
+                spreacode.RoleID = role.RoleID;
+                spreacode.CodeID = GameManager.CustomeModule<SpreaCodeManager>().RandomCodeID(role.RoleID);
+                var dict = new Dictionary<int, int>() { };
+                dict.Add(6002, -1);//10人奖励
+                dict.Add(6003, -1);//30人奖励
+                dict.Add(6004, -1);//50人奖励
+                dict.Add(6005, -1);//100人奖励
+                spreacode.SpreaPlayers = Utility.Json.ToJson(dict);
+                NHibernateQuerier.Insert(spreacode);
+                #endregion
+                #region 爬塔初始化
+                NHibernateQuerier.Insert(new Tower() { RoleID = role.RoleID });
+                #endregion
+                RoleCricketDTO roleCricketDTO = new RoleCricketDTO();
+                roleCricketDTO.RoleID = roleCricket.RoleID;
+                roleCricketDTO.CricketList = Utility.Json.ToObject<List<int>>(roleCricket.CricketList);
+                roleCricketDTO.TemporaryCrickets = Utility.Json.ToObject<List<int>>(roleCricket.TemporaryCrickets);
+                Dictionary<byte, string> dataDict = new Dictionary<byte, string>();
+                dataDict.Add((byte)ParameterCode.Role, Utility.Json.ToJson(role));
+                dataDict.Add((byte)ParameterCode.RoleAsset, Utility.Json.ToJson(roleAsset));
+                dataDict.Add((byte)ParameterCode.RoleCricket, Utility.Json.ToJson(roleCricketDTO));
+                dataDict.Add((byte)ParameterCode.RoleBattleCombat, Utility.Json.ToJson(battleCombat));
+                #region 
+
+                //创建新的登录
+                var roleEntity = RoleEntity.Create(role.RoleID, (peer as IPeerEntity).SessionId, role);
+                GameManager.CustomeModule<RoleManager>().TryAdd(roleEntity.RoleId, roleEntity);
+                IPeerEntity peerEntity;
+                var isPeerExist = GameManager.CustomeModule<PeerManager>().TryGetValue((peer as IPeerEntity).SessionId, out peerEntity);
+                if (isPeerExist)
+                {
+                    peerEntity.TryAdd(typeof(RoleEntity), roleEntity);
+                    Utility.Debug.LogError("yzqData登录成功RoleID:" + roleEntity.SessionId);
+                    GameManager.CustomeModule<LoginManager>().S2CLogin((peer as IPeerEntity).SessionId, Utility.Json.ToJson(dataDict), ReturnCode.Success);
+                }
+
+                #endregion
+                #endregion
+            }else
+                GameManager.CustomeModule<LoginManager>().S2CLogin((peer as IPeerEntity).SessionId, null, ReturnCode.Fail);
         }
 
     }
