@@ -16,7 +16,7 @@ namespace AscensionProtocol
         public RoleCricketDTO()
         {
             CricketList =new List<int>() { -1,-1,-1};
-            TemporaryCrickets = new List<int>() {-1,-1,-1 };
+            TemporaryCrickets = new List<int>() {-1,-1,-1,-1, -1, -1, -1, -1, -1, -1 };
         }
     }
 }

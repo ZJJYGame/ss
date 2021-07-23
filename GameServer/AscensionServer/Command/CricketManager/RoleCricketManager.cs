@@ -73,60 +73,120 @@ namespace AscensionServer
             RoleCricketDTO roleCricketDTO = new RoleCricketDTO();
             roleCricketDTO.RoleID = roleCricket.RoleID;
             roleCricketDTO.TemporaryCrickets = Utility.Json.ToObject<List<int>>(roleCricket.TemporaryCrickets);
-
-            for (int i = 0; i < roleCricketDTO.TemporaryCrickets.Count; i++)
+            roleCricketDTO.CricketList = Utility.Json.ToObject<List<int>>(roleCricket.CricketList);
+            if (roleCricketDTO.CricketList.Contains(-1))
             {
-                if (roleCricketDTO.TemporaryCrickets[i] ==-1)
+                for (int i = 0; i < roleCricketDTO.CricketList.Count; i++)
                 {
-                    var cricketStatus = new CricketStatus();
-                    var cricketAptitude = new CricketAptitude();
-                    if (aptitudes == 0)
+                    if (roleCricketDTO.CricketList[i] == -1)
                     {
-                        cricketAptitude.ConAptitude = Utility.Algorithm.CreateRandomInt(1, 101);
-                        cricketAptitude.StrAptitude = Utility.Algorithm.CreateRandomInt(1, 101);
-                        cricketAptitude.DefAptitude = Utility.Algorithm.CreateRandomInt(1, 101);
-                        cricketAptitude.DexAptitude = Utility.Algorithm.CreateRandomInt(1, 101);
+                        var cricketStatus = new CricketStatus();
+                        var cricketAptitude = new CricketAptitude();
+                        if (aptitudes == 0)
+                        {
+                            cricketAptitude.ConAptitude = Utility.Algorithm.CreateRandomInt(1, 101);
+                            cricketAptitude.StrAptitude = Utility.Algorithm.CreateRandomInt(1, 101);
+                            cricketAptitude.DefAptitude = Utility.Algorithm.CreateRandomInt(1, 101);
+                            cricketAptitude.DexAptitude = Utility.Algorithm.CreateRandomInt(1, 101);
+                        }
+                        else
+                        {
+                            cricketAptitude.ConAptitude = aptitudes;
+                            cricketAptitude.StrAptitude = aptitudes;
+                            cricketAptitude.DefAptitude = aptitudes;
+                            cricketAptitude.DexAptitude = aptitudes;
+                        }
+                        var cricket = new Cricket();
+                        cricket.Roleid = roleid;
+                        var headlist = CricketHeadDict.Keys.ToList<int>();
+                        var headnum = Utility.Algorithm.CreateRandomInt(0, headlist.Count);
+                        cricket.HeadPortraitID = CricketHeadDict[headlist[headnum]].CricketID;
+                        var namelist = NameDict.Keys.ToList<int>();
+                        var namenum = Utility.Algorithm.CreateRandomInt(0, namelist.Count);
+                        cricket.CricketName = NameDict[namelist[namenum]].CricketName;
+                        cricket = NHibernateQuerier.Insert(cricket);
+                        cricketAptitude.CricketID = cricket.ID;
+                        NHibernateQuerier.Insert(cricketAptitude);
+                        var cricketAddition = new CricketAddition();
+                        cricketAddition.CricketID = cricket.ID;
+                        NHibernateQuerier.Insert(cricketAddition);
+                        var cricketPoint = new CricketPoint();
+                        cricketPoint.FreePoint = cricketLevelDict[cricket.LevelID].AssignPoint;
+                        cricketPoint.CricketID = cricket.ID;
+                        NHibernateQuerier.Insert(cricketPoint);
+                        //cricketStatus = RoleCricketManager.CalculateStutas(cricketAptitude, cricketPoint, cricketAddition);
+                        cricketStatus = RoleCricketManager.SkillAdditionStatus(cricket, cricketAptitude, cricketPoint, cricketAddition, out var cricketPointTemp);
+                        cricketStatus.CricketID = cricket.ID;
+                        #region
+                        cricketAptitude.SkillCon = cricketPointTemp.Con;
+                        cricketAptitude.SkillDef = cricketPointTemp.Def;
+                        cricketAptitude.SkillDex = cricketPointTemp.Dex;
+                        cricketAptitude.SkillStr = cricketPointTemp.Str;
+                        #endregion
+                        NHibernateQuerier.Insert(cricketStatus);
+                        NHibernateQuerier.Update(cricketAptitude);
+                        roleCricketDTO.CricketList[i] = cricket.ID;
+                        break;
                     }
-                    else
-                    {
-                        cricketAptitude.ConAptitude = aptitudes;
-                        cricketAptitude.StrAptitude = aptitudes;
-                        cricketAptitude.DefAptitude = aptitudes;
-                        cricketAptitude.DexAptitude = aptitudes;
-                    }
-                    var cricket = new Cricket();
-                    cricket.Roleid = roleid;
-                    var headlist = CricketHeadDict.Keys.ToList<int>();
-                    var headnum = Utility.Algorithm.CreateRandomInt(0, headlist.Count);
-                    cricket.HeadPortraitID = CricketHeadDict[headlist[headnum]].CricketID;
-                    var namelist = NameDict.Keys.ToList<int>();
-                    var namenum = Utility.Algorithm.CreateRandomInt(0, namelist.Count);
-                    cricket.CricketName = NameDict[namelist[namenum]].CricketName;
-                    cricket = NHibernateQuerier.Insert(cricket);
-                    cricketAptitude.CricketID = cricket.ID;
-                    NHibernateQuerier.Insert(cricketAptitude);
-                    var cricketAddition = new CricketAddition();
-                    cricketAddition.CricketID = cricket.ID;
-                    NHibernateQuerier.Insert(cricketAddition);
-                    var cricketPoint = new CricketPoint();
-                    cricketPoint.FreePoint = cricketLevelDict[cricket.LevelID].AssignPoint;
-                    cricketPoint.CricketID = cricket.ID;
-                    NHibernateQuerier.Insert(cricketPoint);
-                    //cricketStatus = RoleCricketManager.CalculateStutas(cricketAptitude, cricketPoint, cricketAddition);
-                    cricketStatus =RoleCricketManager.SkillAdditionStatus(cricket, cricketAptitude, cricketPoint, cricketAddition,out var cricketPointTemp);
-                    cricketStatus.CricketID = cricket.ID;
-                    #region
-                    cricketAptitude.SkillCon = cricketPointTemp.Con;
-                    cricketAptitude.SkillDef = cricketPointTemp.Def;
-                    cricketAptitude.SkillDex = cricketPointTemp.Dex;
-                    cricketAptitude.SkillStr = cricketPointTemp.Str;
-                    #endregion
-                    NHibernateQuerier.Insert(cricketStatus);
-                    NHibernateQuerier.Update(cricketAptitude);
-                    roleCricketDTO.TemporaryCrickets[i] = cricket.ID;
-                    break;
                 }
             }
+            else
+            {
+                for (int i = 0; i < roleCricketDTO.TemporaryCrickets.Count; i++)
+                {
+                    if (roleCricketDTO.TemporaryCrickets[i] == -1)
+                    {
+                        var cricketStatus = new CricketStatus();
+                        var cricketAptitude = new CricketAptitude();
+                        if (aptitudes == 0)
+                        {
+                            cricketAptitude.ConAptitude = Utility.Algorithm.CreateRandomInt(1, 101);
+                            cricketAptitude.StrAptitude = Utility.Algorithm.CreateRandomInt(1, 101);
+                            cricketAptitude.DefAptitude = Utility.Algorithm.CreateRandomInt(1, 101);
+                            cricketAptitude.DexAptitude = Utility.Algorithm.CreateRandomInt(1, 101);
+                        }
+                        else
+                        {
+                            cricketAptitude.ConAptitude = aptitudes;
+                            cricketAptitude.StrAptitude = aptitudes;
+                            cricketAptitude.DefAptitude = aptitudes;
+                            cricketAptitude.DexAptitude = aptitudes;
+                        }
+                        var cricket = new Cricket();
+                        cricket.Roleid = roleid;
+                        var headlist = CricketHeadDict.Keys.ToList<int>();
+                        var headnum = Utility.Algorithm.CreateRandomInt(0, headlist.Count);
+                        cricket.HeadPortraitID = CricketHeadDict[headlist[headnum]].CricketID;
+                        var namelist = NameDict.Keys.ToList<int>();
+                        var namenum = Utility.Algorithm.CreateRandomInt(0, namelist.Count);
+                        cricket.CricketName = NameDict[namelist[namenum]].CricketName;
+                        cricket = NHibernateQuerier.Insert(cricket);
+                        cricketAptitude.CricketID = cricket.ID;
+                        NHibernateQuerier.Insert(cricketAptitude);
+                        var cricketAddition = new CricketAddition();
+                        cricketAddition.CricketID = cricket.ID;
+                        NHibernateQuerier.Insert(cricketAddition);
+                        var cricketPoint = new CricketPoint();
+                        cricketPoint.FreePoint = cricketLevelDict[cricket.LevelID].AssignPoint;
+                        cricketPoint.CricketID = cricket.ID;
+                        NHibernateQuerier.Insert(cricketPoint);
+                        //cricketStatus = RoleCricketManager.CalculateStutas(cricketAptitude, cricketPoint, cricketAddition);
+                        cricketStatus = RoleCricketManager.SkillAdditionStatus(cricket, cricketAptitude, cricketPoint, cricketAddition, out var cricketPointTemp);
+                        cricketStatus.CricketID = cricket.ID;
+                        #region
+                        cricketAptitude.SkillCon = cricketPointTemp.Con;
+                        cricketAptitude.SkillDef = cricketPointTemp.Def;
+                        cricketAptitude.SkillDex = cricketPointTemp.Dex;
+                        cricketAptitude.SkillStr = cricketPointTemp.Str;
+                        #endregion
+                        NHibernateQuerier.Insert(cricketStatus);
+                        NHibernateQuerier.Update(cricketAptitude);
+                        roleCricketDTO.TemporaryCrickets[i] = cricket.ID;
+                        break;
+                    }
+                }
+            }
+            roleCricket.CricketList = Utility.Json.ToJson(roleCricketDTO.CricketList);
             roleCricket.TemporaryCrickets = Utility.Json.ToJson(roleCricketDTO.TemporaryCrickets);
             NHibernateQuerier.Update(roleCricket);
             Utility.Debug.LogInfo("YZQ添加新的临时蛐蛐进来了" + cricketid);
@@ -159,6 +219,12 @@ namespace AscensionServer
                 {
                     NHibernateQuerier.Delete(cricketStatus);
                 }
+                var cricketAddition = xRCommon.xRCriteria<CricketAddition>(nHCriteriaStatus);
+                if (cricketAddition != null)
+                {
+                    NHibernateQuerier.Delete(cricketAddition);
+                }
+
                 var cricketAptitude = xRCommon.xRCriteria<CricketAptitude>(nHCriteriaStatus);
                 if (cricketAptitude!=null)
                 {
@@ -210,6 +276,11 @@ namespace AscensionServer
                 if (cricketAptitude != null)
                 {
                     NHibernateQuerier.Delete(cricketAptitude);
+                }
+                var cricketAddition = xRCommon.xRCriteria<CricketAddition>(nHCriteriaStatus);
+                if (cricketAddition != null)
+                {
+                    NHibernateQuerier.Delete(cricketAddition);
                 }
                 var cricketPoint = xRCommon.xRCriteria<CricketPoint>(nHCriteriaStatus);
                 if (cricketPoint != null)
