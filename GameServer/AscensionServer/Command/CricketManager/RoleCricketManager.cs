@@ -299,6 +299,18 @@ namespace AscensionServer
             }
 
         }
+
+        public static void ChangeCricketName(int roleId, int cricketId, string name)
+        {
+            Utility.Debug.LogError("开始改变蛐蛐名字");
+            var nHCriteriacricket = xRCommon.xRNHCriteria("ID", cricketId);
+            var cricket = xRCommon.xRCriteria<Cricket>(nHCriteriacricket);
+            cricket.CricketName = name;
+            NHibernateQuerier.Update(cricket);
+            var dataDict = xRCommon.xRS2CSub();
+            dataDict.Add((byte)CricketOperateType.UpdateName, Utility.Json.ToJson(new CricketDTO() { ID=cricket.ID,CricketName=cricket.CricketName}));
+            xRCommon.xRS2CSend(roleId, (ushort)ATCmd.SyncCricket, (byte)ReturnCode.Success, dataDict);
+        }
         /// <summary>
         /// 获取临时槽位蟋蟀
         /// </summary>

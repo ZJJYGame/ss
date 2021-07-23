@@ -20,6 +20,7 @@ namespace AscensionProtocol
         UpdTempCricket =9,
         EnlargeNest=10,//扩充窝
         LevelUp=11,
-        UpdateSkill=12
+        UpdateSkill=12,
+        UpdateName=13,//改名字
     }
 }

@@ -437,6 +437,7 @@ namespace AscensionServer
                 xRCommon.xRS2CSend(roleid, (ushort)ATCmd.SyncCricket, (short)ReturnCode.Fail, xRCommonTip.xR_err_Verify);
         }
 
+
         public static CricketStatus SkillAdditionStatus(Cricket cricket, CricketAptitude cricketAptitude, CricketPoint cricketPoint, CricketAddition cricketAddition, out CricketPoint cricketPointTemp)
         {
             cricketPointTemp = new CricketPoint();

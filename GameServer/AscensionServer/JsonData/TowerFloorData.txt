@@ -164,7 +164,7 @@
 	{
 		"FloorId":27,
 		"CricketId":10028,
-		"RewardIdArray":[21,30,25],
+		"RewardIdArray":[21,20,25],
 		"RewardCountArray":[3,2,1]
 	},
 	{

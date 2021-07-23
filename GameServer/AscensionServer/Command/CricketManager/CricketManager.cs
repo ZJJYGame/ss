@@ -66,6 +66,10 @@ namespace AscensionServer
                         var tempprop = Utility.Json.ToObject<RolepPropDTO>(dict[(byte)ParameterCode.UseItem].ToString());
                         RoleCricketManager.UpdateCricketSkill(roleObj.RoleID, tempprop, tempprop.CricketID);
                         break;
+                    case CricketOperateType.UpdateName:
+                        var cricketDTO= Utility.Json.ToObject<CricketDTO>(dict[(byte)ParameterCode.Cricket].ToString());
+                        RoleCricketManager.ChangeCricketName(roleObj.RoleID, cricketDTO.ID, cricketDTO.CricketName);
+                        break; 
                     default:
                         break;
                 }
