@@ -165,10 +165,15 @@ namespace AscensionServer
             }
             else //该难度挑战结束
             {
+
+                if (towerDifficultyDataDict.ContainsKey(tower.NowChooseDifficulty + 1))
+                {
+                    if (tower.NowChooseDifficulty + 1 > tower.MaxDifficulty)
+                        tower.MaxDifficulty = tower.NowChooseDifficulty + 1;
+                }
+                    
                 tower.NowChooseDifficulty = -1;
                 tower.NowLevel = 0;
-                if (towerDifficultyDataDict.ContainsKey(tower.MaxDifficulty + 1))
-                    tower.MaxDifficulty++;
             }
 
             NHibernateQuerier.Update(tower);
