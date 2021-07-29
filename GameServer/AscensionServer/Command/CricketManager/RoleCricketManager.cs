@@ -448,10 +448,7 @@ namespace AscensionServer
                             Utility.Debug.LogInfo("YZQ替换成功" + tempDict.IndexOf(cricketid));
                             var num = tempDict.IndexOf(cricketid);
                             tempDict.RemoveAt(num);
-                            if (tempDict.Count<3)
-                            {
-                                tempDict.Add(-1);
-                            }
+                            tempDict.Add(-1);
                             break;
                         }
                     }
