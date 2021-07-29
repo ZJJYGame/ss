@@ -136,6 +136,11 @@ namespace AscensionServer
             if (machineData.ContainsKey(match.selfCricketData.RankID))
             {
                 var setData = machineData[match.selfCricketData.RankID];
+                //随机名字
+                GameManager.CustomeModule<DataManager>().TryGetValue<List<MatchRobotNameData>>(out var matchRobotNameDataList);
+                int randomValue = Utility.Algorithm.CreateRandomInt(0, matchRobotNameDataList.Count);
+                setData.CricketName= matchRobotNameDataList[randomValue].UserName;
+
                 matchDto.selfData = match.selfData;
                 matchDto.selfCricketData = match.selfCricketData;
                 matchDto.otherData = new RoleDTO() { RoleName = setData.UserName };

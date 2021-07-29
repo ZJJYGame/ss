@@ -41,10 +41,8 @@ namespace AscensionServer
         //机器人
         public void Init(RoleDTO roleDTO, CricketDTO cricketDTO,MachineData machineData)
         {
-            GameManager.CustomeModule<DataManager>().TryGetValue<List<MatchRobotNameData>>(out var matchRobotNameDataList);
-            int randomValue = Utility.Algorithm.CreateRandomInt(0, matchRobotNameDataList.Count);
             //todo机器人RoleID
-            RoleName = matchRobotNameDataList[randomValue].UserName;
+            RoleName = machineData.CricketName;
             //todo蛐蛐唯一ID
             battleBuffController = new BattleBuffController(roleBattleData);
             roleBattleData = new RoleBattleData(battleBuffController, machineData, this) { };
