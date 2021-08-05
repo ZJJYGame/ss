@@ -31,7 +31,7 @@ namespace AscensionServer
                         break;
                     case ShopOperate.ADAward:
                         prop = Utility.Json.ToObject<RolepPropDTO>(propData[(byte)ParameterCode.RoleAsset].ToString());
-                        BuyPropManager.BuyProp(prop);
+                        BuyPropManager.GetAwarad(prop);
                         break;
                     default:
                         break;

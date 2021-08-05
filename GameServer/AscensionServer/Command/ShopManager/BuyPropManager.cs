@@ -106,8 +106,10 @@ namespace AscensionServer
                     SkillAward(roleShopDTO);
                     break;
                 case ADAwardType.Prop:
+                    PropAward(roleShopDTO);
                     break;
                 case ADAwardType.Cricket:
+                    CricketAward(roleShopDTO);
                     break;
                 default:
                     break;
@@ -120,11 +122,10 @@ namespace AscensionServer
         public static void GoldAward(RolepPropDTO roleShopDTO)
         {
             GameManager.CustomeModule<DataManager>().TryGetValue<Dictionary<int, ADAward>>(out var adAwardDict);
-            var result = adAwardDict.TryGetValue(roleShopDTO.PropID,out var aDAward);
+            var result = adAwardDict.TryGetValue(1701,out var aDAward);
             if (result)
             {
-                Random random = new Random();
-                var num = random.Next(aDAward.AddNumber[0], aDAward.AddNumber[0] + 1);
+                var num = Utility.Algorithm.CreateRandomInt(aDAward.AddNumber[0], aDAward.AddNumber[0] + 1);
                 UpdateRoleAssets(roleShopDTO.RoleID, num);
             }
             else
@@ -139,11 +140,10 @@ namespace AscensionServer
         public static void SkillAward(RolepPropDTO roleShopDTO)
         {
             GameManager.CustomeModule<DataManager>().TryGetValue<Dictionary<int, ADAward>>(out var adAwardDict);
-            var result = adAwardDict.TryGetValue(roleShopDTO.PropID, out var aDAward);
+            var result = adAwardDict.TryGetValue(1702, out var aDAward);
             if (result)
             {
-                Random random = new Random();
-                var num = random.Next(aDAward.AddNumber[0], aDAward.AddNumber[0] + 1);
+                var num = Utility.Algorithm.CreateRandomInt(aDAward.AddNumber[0], aDAward.AddNumber[0] + 1);
                 InventoryManager.xRAddInventory(roleShopDTO.RoleID,new Dictionary<int, ItemDTO>() { { num, new ItemDTO() {ItemAmount=1 } } });
             }
             else
@@ -157,14 +157,45 @@ namespace AscensionServer
         /// <param name="roleShopDTO"></param>
         public static void PropAward(RolepPropDTO roleShopDTO)
         {
-            Random random = new Random();
-            var num = random.Next(0,1001);
+            var num = Utility.Algorithm.CreateRandomInt(0,1001);
             GameManager.CustomeModule<DataManager>().TryGetValue<Dictionary<int, ADAward>>(out var adAwardDict);
-            if (num<=400)
+            if (num<1001&&num>=600)//奖励表奖励
             {
-              num=  random.Next(adAwardDict[1703].AddNumber[0], adAwardDict[1703].AddNumber[1]);
-                InventoryManager.xRAddInventory(roleShopDTO.RoleID, new Dictionary<int, ItemDTO>() { { num, new ItemDTO() { ItemAmount = 1 } } });
+                InventoryManager.xRAddInventory(roleShopDTO.RoleID, new Dictionary<int, ItemDTO>() { { adAwardDict[1703].AddNumber[0], new ItemDTO() { ItemAmount = 1 } } });
             }
+            else if (num < 600 && num >= 300)
+            {
+                InventoryManager.xRAddInventory(roleShopDTO.RoleID, new Dictionary<int, ItemDTO>() { { adAwardDict[1704].AddNumber[0], new ItemDTO() { ItemAmount = 1 } } });
+            }
+            else if (num < 300 && num >= 160)
+            {
+                InventoryManager.xRAddInventory(roleShopDTO.RoleID, new Dictionary<int, ItemDTO>() { { adAwardDict[1705].AddNumber[0], new ItemDTO() { ItemAmount = 1 } } });
+            }
+            else if (num < 160 && num >= 120)
+            {
+                InventoryManager.xRAddInventory(roleShopDTO.RoleID, new Dictionary<int, ItemDTO>() { { adAwardDict[1706].AddNumber[0], new ItemDTO() { ItemAmount = 1 } } });
+            }
+            else if (num < 120 && num >= 60)
+            {
+                InventoryManager.xRAddInventory(roleShopDTO.RoleID, new Dictionary<int, ItemDTO>() { { adAwardDict[1707].AddNumber[0], new ItemDTO() { ItemAmount = 1 } } });
+            }
+            else if (num < 60 && num >= 10)
+            {
+                InventoryManager.xRAddInventory(roleShopDTO.RoleID, new Dictionary<int, ItemDTO>() { { adAwardDict[1708].AddNumber[0], new ItemDTO() { ItemAmount = 1 } } });
+            }
+            else if (num <10 && num >= 9)
+            {
+                InventoryManager.xRAddInventory(roleShopDTO.RoleID, new Dictionary<int, ItemDTO>() { { adAwardDict[1709].AddNumber[0], new ItemDTO() { ItemAmount = 1 } } });
+            }
+            else if (num < 9 && num >= 4)
+            {
+                InventoryManager.xRAddInventory(roleShopDTO.RoleID, new Dictionary<int, ItemDTO>() { { adAwardDict[1710].AddNumber[0], new ItemDTO() { ItemAmount = 1 } } });
+            }
+            else if (num < 4 && num >=0)
+            {
+                InventoryManager.xRAddInventory(roleShopDTO.RoleID, new Dictionary<int, ItemDTO>() { { adAwardDict[1711].AddNumber[0], new ItemDTO() { ItemAmount = 1 } } });
+            }
+            Utility.Debug.LogError("广告奖励技能数据为" + num + "人物id为" + roleShopDTO.RoleID);
         }
         /// <summary>
         /// 领取蛐蛐奖励
@@ -172,7 +203,48 @@ namespace AscensionServer
         /// <param name="roleShopDTO"></param>
         public static void CricketAward(RolepPropDTO roleShopDTO)
         {
-
+            var num = Utility.Algorithm.CreateRandomInt(0, 1001);
+            GameManager.CustomeModule<DataManager>().TryGetValue<Dictionary<int, ADAward>>(out var adAwardDict);
+            Utility.Debug.LogError("广告奖励技能数据为" + num + "人物id为" + roleShopDTO.RoleID);
+            if (num < 1001 && num >= 900)
+            {
+                num = Utility.Algorithm.CreateRandomInt(adAwardDict[1712].AddNumber[0], adAwardDict[1712].AddNumber[1]);
+                RoleCricketManager.AddCricket(5001, roleShopDTO.RoleID, num);
+            } else if (num < 900 && num >= 700)
+            {
+                num = Utility.Algorithm.CreateRandomInt(adAwardDict[1713].AddNumber[0], adAwardDict[1713].AddNumber[1]);
+                RoleCricketManager.AddCricket(5001, roleShopDTO.RoleID, num);
+            }
+            else if (num < 700 && num >= 300)
+            {
+                num = Utility.Algorithm.CreateRandomInt(adAwardDict[1714].AddNumber[0], adAwardDict[1714].AddNumber[1]);
+                RoleCricketManager.AddCricket(5001, roleShopDTO.RoleID, num);
+            }
+            else if (num < 300 && num >= 200)
+            {
+                num = Utility.Algorithm.CreateRandomInt(adAwardDict[1715].AddNumber[0], adAwardDict[1715].AddNumber[1]);
+                RoleCricketManager.AddCricket(5001, roleShopDTO.RoleID, num);
+            }
+            else if (num < 200 && num >= 100)
+            {
+                num = Utility.Algorithm.CreateRandomInt(adAwardDict[1716].AddNumber[0], adAwardDict[1716].AddNumber[1]);
+                RoleCricketManager.AddCricket(5001, roleShopDTO.RoleID, num);
+            }
+            else if (num < 100 && num >= 10)
+            {
+                num = Utility.Algorithm.CreateRandomInt(adAwardDict[1717].AddNumber[0], adAwardDict[1717].AddNumber[1]);
+                RoleCricketManager.AddCricket(5001, roleShopDTO.RoleID, num);
+            }
+            else if (num < 10 && num >= 1)
+            {
+                num = Utility.Algorithm.CreateRandomInt(adAwardDict[1718].AddNumber[0], adAwardDict[1718].AddNumber[1]);
+                RoleCricketManager.AddCricket(5001, roleShopDTO.RoleID, num);
+            }
+            else if (num < 1 && num >= 0)
+            {
+                num = Utility.Algorithm.CreateRandomInt(adAwardDict[1719].AddNumber[0], adAwardDict[1719].AddNumber[1]);
+                RoleCricketManager.AddCricket(5001, roleShopDTO.RoleID, num);
+            }
         }
         public enum ADAwardType
         {
