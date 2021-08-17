@@ -1,3 +1,3 @@
 ﻿[
-{"Level":1,"Atk":0,"Hp":20,"Defense":0,"Mp":99,"MpReply":40,"Crt":0,"CrtAtk":50,"CrtDef":0,"ReduceAtk":0,"ReduceDef":0,"Rebound":0,"Eva":0,"Speed":1000}
+{"Level":1,"Atk":0,"Hp":25,"Defense":0,"Mp":99,"MpReply":40,"Crt":0,"CrtAtk":50,"CrtDef":0,"ReduceAtk":0,"ReduceDef":0,"Rebound":0,"Eva":0,"Speed":1000}
 ]
