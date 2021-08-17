@@ -162,10 +162,10 @@
 	{
 		"SkillID":3317,
 		"SkillName":"钝化",
-		"Attribute":[13,5],
-		"Percentage":[1,-10],
+		"Attribute":[7,5],
+		"Percentage":[10,-5],
 		"Fixed":[0,0],
-		"LevelPercentage":[0,1],
+		"LevelPercentage":[1,0],
 		"LevelFixed":[0,0],
 		"SkillType":1
 	},
@@ -186,7 +186,7 @@
 		"Percentage":[0,0],
 		"Fixed":[20,20],
 		"LevelPercentage":[0,0],
-		"LevelFixed":[20,20],
+		"LevelFixed":[0,0],
 		"SkillType":1
 	},
 	{
@@ -196,7 +196,7 @@
 		"Percentage":[0],
 		"Fixed":[10],
 		"LevelPercentage":[0],
-		"LevelFixed":[10],
+		"LevelFixed":[0],
 		"SkillType":1
 	},
 	{
@@ -214,9 +214,9 @@
 		"SkillName":"精神抖擞",
 		"Attribute":[2,4],
 		"Percentage":[0,0],
-		"Fixed":[20,20],
+		"Fixed":[0,0],
 		"LevelPercentage":[0,0],
-		"LevelFixed":[20,20],
+		"LevelFixed":[0,0],
 		"SkillType":1
 	},
 	{
@@ -236,14 +236,14 @@
 		"Percentage":[0],
 		"Fixed":[20],
 		"LevelPercentage":[0],
-		"LevelFixed":[20],
+		"LevelFixed":[0],
 		"SkillType":1
 	},
 	{
 		"SkillID":3341,
 		"SkillName":"警惕",
-		"Attribute":[17],
-		"Percentage":[10],
+		"Attribute":[12],
+		"Percentage":[5],
 		"Fixed":[0],
 		"LevelPercentage":[0],
 		"LevelFixed":[0],
@@ -263,7 +263,7 @@
 		"SkillID":3601,
 		"SkillName":"感冒",
 		"Attribute":[6],
-		"Percentage":[-30],
+		"Percentage":[-10],
 		"Fixed":[0],
 		"LevelPercentage":[0],
 		"LevelFixed":[0],
@@ -286,7 +286,7 @@
 		"Percentage":[0,0],
 		"Fixed":[200,10],
 		"LevelPercentage":[0,0],
-		"LevelFixed":[200,10],
+		"LevelFixed":[0,0],
 		"SkillType":2
 	},
 	{
@@ -306,14 +306,14 @@
 		"Percentage":[0,0],
 		"Fixed":[-20,100],
 		"LevelPercentage":[0,0],
-		"LevelFixed":[-20,100],
+		"LevelFixed":[0,0],
 		"SkillType":2
 	},
 	{
 		"SkillID":3606,
 		"SkillName":"异教徒",
 		"Attribute":[5,6],
-		"Percentage":[0,-50],
+		"Percentage":[0,-20],
 		"Fixed":[50,0],
 		"LevelPercentage":[0,0],
 		"LevelFixed":[0,0],
@@ -323,8 +323,8 @@
 		"SkillID":3607,
 		"SkillName":"渎神",
 		"Attribute":[6],
-		"Percentage":[0],
-		"Fixed":[-100],
+		"Percentage":[-15],
+		"Fixed":[0],
 		"LevelPercentage":[0],
 		"LevelFixed":[0],
 		"SkillType":2
@@ -373,7 +373,7 @@
 		"SkillID":3612,
 		"SkillName":"微观世界",
 		"Attribute":[5],
-		"Percentage":[-50],
+		"Percentage":[-40],
 		"Fixed":[0],
 		"LevelPercentage":[0],
 		"LevelFixed":[0],
