@@ -24,6 +24,8 @@ namespace AscensionServer
             RefreshDailyTaskEvent();
             //排行榜刷新事件
             RefreshRankListEvent();
+            //爬塔次数刷新事件
+            RefreshTowerChallengCount();
         }
         /// <summary>
         /// 添加Redis周期刷新事件
@@ -101,6 +103,18 @@ namespace AscensionServer
                Utility.Debug.LogError("排行榜刷新");
                GameManager.CustomeModule<RankManager>().ClearRankDict();
            }));
+        }
+        /// <summary>
+        /// 刷新爬塔次数
+        /// </summary>
+        void RefreshTowerChallengCount()
+        {
+            AddOnTImeEventByDay(RedisKeyDefine._TowerChallengeCountRefreshFlagPerfix, new OnTimeEventStruct(9, 30, 0, new int[] { 0, 1, 2, 3, 4, 5, 6 }, async (str) =>
+            {
+                Utility.Debug.LogError("爬塔次数刷新");
+                await RedisHelper.KeyDeleteAsync(RedisKeyDefine._TowerChallengeCountPerfix);
+
+            }));
         }
     }
 }

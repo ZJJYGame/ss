@@ -16,10 +16,15 @@ namespace AscensionServer
         //计时标记
         public static readonly string _RankGetMoneyLimitRefreshFlagPerfix = "RankGetMoneyLimitRefreshFlag";
         public static readonly string _RankGetMoneyLimitPerfix = "RankGetMoneyLimit";
+        #endregion
+
         #region 每日爬塔挑战次数相关
+        //爬塔刷新计时标记
+        public static readonly string _TowerChallengeCountRefreshFlagPerfix = "_TowerChallengeCountRefreshFlagPerfix";
+        //爬塔次数记录
         public static readonly string _TowerChallengeCountPerfix = "_TowerChallengeCountLimit";
         #endregion
-        #endregion
+
         #region 每日任务相关
         //每日任务倒计时刷新的标记位
         public static readonly string _DailyTaskRefreshFlagPerfix = "DailyTaskRefreshFlag";
@@ -28,6 +33,7 @@ namespace AscensionServer
         //玩家每日任务完成情况记录
         public static readonly string _RoleDailyTaskRecordPerfix = "RoleDailyTaskRecord";
         #endregion
+
         #region 排行榜事件
         /// <summary>
         /// 排行榜刷新
