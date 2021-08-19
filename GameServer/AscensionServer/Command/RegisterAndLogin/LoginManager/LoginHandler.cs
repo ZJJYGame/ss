@@ -271,6 +271,7 @@ namespace AscensionServer
                 #endregion
                 NHibernateQuerier.Insert(cricketAptitude);
                 cricketPoint.CricketID = cricket.ID;
+                cricketPoint.FreePoint = 5;
                 NHibernateQuerier.Insert(cricketPoint);
                 cricketAddition.CricketID = cricket.ID;
                 NHibernateQuerier.Insert(cricketAddition);
